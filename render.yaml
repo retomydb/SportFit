@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: sportfit-api
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/csrf
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: github
+      - key: SPORTFIT_GITHUB_REPOSITORY
+        value: retomydb/SportFit
+      - key: SPORTFIT_GITHUB_BRANCH
+        value: main
+      - key: SPORTFIT_ALLOWED_ORIGINS
+        value: https://retomydb.github.io
+      - key: SPORTFIT_GITHUB_TOKEN
+        sync: false
+      - key: SPORTFIT_DATA_KEY
+        sync: false

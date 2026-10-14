@@ -1,0 +1,74 @@
+[
+  {
+    "file": "walking.jpg",
+    "model": "grok-imagine-image",
+    "prompt": "Premium editorial sports photography for SportFit Pro: friends brisk walking on a beautiful green park trail. Natural skin texture, realistic anatomy, sophisticated cinematic light, sage and forest green palette, authentic movement, landscape composition. No lettering, no watermark, no logos.",
+    "generatedAt": "2026-10-14T21:48:41.097Z"
+  },
+  {
+    "file": "running.jpg",
+    "model": "grok-imagine-image",
+    "prompt": "Premium editorial sports photography for SportFit Pro: a female athlete running on a coastal road at sunrise, ocean and mountains. Natural skin texture, realistic anatomy, sophisticated cinematic light, sage and forest green palette, authentic movement, landscape composition. No lettering, no watermark, no logos.",
+    "generatedAt": "2026-10-14T21:48:42.552Z"
+  },
+  {
+    "file": "cycling.jpg",
+    "model": "grok-imagine-image",
+    "prompt": "Premium editorial sports photography for SportFit Pro: road cyclist riding a winding mountain road in soft morning light. Natural skin texture, realistic anatomy, sophisticated cinematic light, sage and forest green palette, authentic movement, landscape composition. No lettering, no watermark, no logos.",
+    "generatedAt": "2026-10-14T21:48:43.249Z"
+  },
+  {
+    "file": "swimming.jpg",
+    "model": "grok-imagine-image",
+    "prompt": "Premium editorial sports photography for SportFit Pro: athletic swimmer doing freestyle in a clear turquoise outdoor lap pool. Natural skin texture, realistic anatomy, sophisticated cinematic light, sage and forest green palette, authentic movement, landscape composition. No lettering, no watermark, no logos.",
+    "generatedAt": "2026-10-14T21:48:47.519Z"
+  },
+  {
+    "file": "football.jpg",
+    "model": "grok-imagine-image",
+    "prompt": "Premium editorial sports photography for SportFit Pro: diverse adult football players training on a lush green football pitch. Natural skin texture, realistic anatomy, sophisticated cinematic light, sage and forest green palette, authentic movement, landscape composition. No lettering, no watermark, no logos.",
+    "generatedAt": "2026-10-14T21:48:49.429Z"
+  },
+  {
+    "file": "basketball.jpg",
+    "model": "grok-imagine-image",
+    "prompt": "Premium editorial sports photography for SportFit Pro: basketball player dribbling on a warm sunlit urban basketball court. Natural skin texture, realistic anatomy, sophisticated cinematic light, sage and forest green palette, authentic movement, landscape composition. No lettering, no watermark, no logos.",
+    "generatedAt": "2026-10-14T21:48:50.735Z"
+  },
+  {
+    "file": "strength.jpg",
+    "model": "grok-imagine-image",
+    "prompt": "Premium editorial sports photography for SportFit Pro: athlete doing a controlled dumbbell exercise in a premium modern gym. Natural skin texture, realistic anatomy, sophisticated cinematic light, sage and forest green palette, authentic movement, landscape composition. No lettering, no watermark, no logos.",
+    "generatedAt": "2026-10-14T21:48:55.275Z"
+  },
+  {
+    "file": "aerobic.jpg",
+    "model": "grok-imagine-image",
+    "prompt": "Premium editorial sports photography for SportFit Pro: diverse adults doing an energetic aerobics class in a bright studio. Natural skin texture, realistic anatomy, sophisticated cinematic light, sage and forest green palette, authentic movement, landscape composition. No lettering, no watermark, no logos.",
+    "generatedAt": "2026-10-14T21:48:56.652Z"
+  },
+  {
+    "file": "yoga.jpg",
+    "model": "grok-imagine-image",
+    "prompt": "Premium editorial sports photography for SportFit Pro: woman practicing a yoga warrior pose in a peaceful sunlit studio. Natural skin texture, realistic anatomy, sophisticated cinematic light, sage and forest green palette, authentic movement, landscape composition. No lettering, no watermark, no logos.",
+    "generatedAt": "2026-10-14T21:48:59.564Z"
+  },
+  {
+    "file": "stretching.jpg",
+    "model": "grok-imagine-image",
+    "prompt": "Premium editorial sports photography for SportFit Pro: athlete stretching on a mat in a green park. Natural skin texture, realistic anatomy, sophisticated cinematic light, sage and forest green palette, authentic movement, landscape composition. No lettering, no watermark, no logos.",
+    "generatedAt": "2026-10-14T21:49:01.771Z"
+  },
+  {
+    "file": "hero.jpg",
+    "model": "grok-imagine-image",
+    "prompt": "Premium editorial sports photography for SportFit Pro: two athletes running on a dramatic mountain trail, warm sunrise and deep green foliage, people on right side, dark empty space on left for headline. Natural skin texture, realistic anatomy, sophisticated cinematic light, sage and forest green palette, authentic movement, landscape composition. No lettering, no watermark, no logos.",
+    "generatedAt": "2026-10-14T21:49:02.957Z"
+  },
+  {
+    "file": "recovery.jpg",
+    "model": "grok-imagine-image",
+    "prompt": "Premium editorial sports photography for SportFit Pro: a water bottle and rolled yoga mat beside a tranquil sunlit pool. Natural skin texture, realistic anatomy, sophisticated cinematic light, sage and forest green palette, authentic movement, landscape composition. No lettering, no watermark, no logos.",
+    "generatedAt": "2026-10-14T21:49:05.553Z"
+  }
+]

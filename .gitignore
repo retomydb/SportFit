@@ -1,0 +1,12 @@
+target/
+data/*.db
+data/*.trace.db
+data/*.lock.db
+.tools/
+.env
+*.log
+.DS_Store
+site/
+.runtime/
+.env.*
+!.env.example
