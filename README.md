@@ -4,7 +4,7 @@ A responsive fitness website built from `docs/MASTER-PROMPT.docx`. Runs in a web
 
 ## GitHub storage and deployment
 
-The GitHub-backed configuration stores encrypted account documents in the `retomydb/SportFit` repository. The Pages workflow publishes the UI separately; a hosted Java API handles authentication and secure repository writes. See [deployment instructions](docs/GITHUB-DEPLOYMENT.md) for environment variables, migration, secret handling and the backend connection. The API hosting details are still required before the public UI can use accounts online.
+The GitHub-backed configuration stores encrypted account documents in the `retomydb/SportFit` repository. The Pages workflow publishes the UI separately; a hosted Java API handles authentication and secure repository writes. See [deployment instructions](docs/GITHUB-DEPLOYMENT.md) for environment variables, migration, secret handling and the backend connection. The Docker and HTTPS tunnel setup is documented in the deployment guide; start or reconnect it with `./scripts/start-docker.sh`.
 
 ## Open the website
 

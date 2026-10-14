@@ -49,3 +49,28 @@ To change the backend later, update `API_BASE_URL` and rerun the Pages workflow.
 ## Tests
 
 `mvn test` covers the API and encrypted GitHub storage using a local fake Contents API. Storage tests verify encryption round-trips, duplicate accounts, conflict retries, and rejection of modified ciphertext/wrong keys. `scripts/check-ui.cjs` exercises the website against an isolated H2-backed test server. Real GitHub integration should use a clearly labelled synthetic account and confirm only encrypted ciphertext is committed.
+
+## Docker on the owner's computer
+
+`compose.yaml` runs the Java backend and Cloudflare tunnel on a separate Docker network. The backend's host port is bound only to `127.0.0.1:8087`; remote visitors reach it through HTTPS. The GitHub token and existing encryption key are mounted as Docker secrets from ignored local files in `.runtime/`, rather than being copied into the image or published to Pages.
+
+Start or reconnect:
+
+```sh
+cd /Users/oladimejishodipe/SportApp
+./scripts/start-docker.sh
+```
+
+This starts Docker Desktop if needed, builds and starts the two containers, checks the public API, updates the repository's `API_BASE_URL` variable and requests a new Pages deployment. Keep the computer awake, online, and running Docker. A local non-Docker server on port 8087 must be stopped before starting the container.
+
+The included Quick Tunnel does not require a Cloudflare account or router changes. Its hostname is temporary and may change when the tunnel is recreated. After a Docker/tunnel restart, run the reconnect command above so Pages receives the current address. If only the Pages connection needs refreshing, run `node scripts/connect-pages.mjs`. For a permanent address and production use, configure a named Cloudflare Tunnel with your own account/domain: https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/.
+
+Check or stop only SportFit:
+
+```sh
+docker compose ps
+docker compose logs --tail=50 backend tunnel
+docker compose stop
+```
+
+Other Docker projects are independent. `scripts/check-public-api.mjs` optionally verifies real HTTPS registration, session authentication and GitHub persistence using a synthetic account, then removes that account's current encrypted file. Its synthetic revisions remain in Git history.

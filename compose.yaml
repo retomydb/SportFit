@@ -1,0 +1,42 @@
+name: sportfit
+services:
+  backend:
+    build: .
+    image: sportfit-api:local
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8087:8087"
+    environment:
+      SPRING_PROFILES_ACTIVE: github
+      SPRING_CONFIG_IMPORT: configtree:/run/secrets/
+      SPORTFIT_GITHUB_REPOSITORY: retomydb/SportFit
+      SPORTFIT_GITHUB_BRANCH: main
+      SPORTFIT_ALLOWED_ORIGINS: https://retomydb.github.io,http://localhost:8087,http://127.0.0.1:8087
+      PORT: "8087"
+    secrets:
+      - source: github_token
+        target: sportfit.github.token
+      - source: data_key
+        target: sportfit.github.encryption-key
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate --protocol http2 --url http://backend:8087
+    restart: unless-stopped
+    depends_on:
+      - backend
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+secrets:
+  github_token:
+    file: .runtime/github-token
+  data_key:
+    file: .runtime/data-key
