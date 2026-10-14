@@ -1,6 +1,6 @@
 # GitHub storage and Pages deployment
 
-The source code and encrypted account files live in `retomydb/SportFit`. Keep this repository private. The UI can be published with GitHub Pages if the repository's GitHub plan permits Pages for private repositories. Publishing the site does not publish account files because the Pages artifact contains only `src/main/resources/static` assets.
+The source code and encrypted account files live in `retomydb/SportFit`. The repository was made public by the owner to enable GitHub Pages on the current plan. Account files remain encrypted, but their ciphertext and history are public. For production privacy, a private storage repository can be selected independently with `SPORTFIT_GITHUB_REPOSITORY`. Publishing the site does not publish account files because the Pages artifact contains only `src/main/resources/static` assets.
 
 The public UI and Java API have separate hosting. GitHub Pages cannot run Spring Boot or safely hold an owner token. The API is deployed to the user's existing backend hosting; its public HTTPS origin is the repository variable `API_BASE_URL`.
 
@@ -44,7 +44,7 @@ Enable GitHub Pages with **GitHub Actions** as source. Set the repository variab
 
 The build uses relative asset paths for the `/SportFit/` project path. The account directory, Java source, local database, and secrets are never included in the published artifact. Changes beneath `data/` do not run the Pages workflow. Until `API_BASE_URL` is set, the deployed UI clearly reports that the account server still needs connecting and does not attempt GitHub token access from the browser.
 
-To change the backend later, update `API_BASE_URL` and rerun the Pages workflow. Do not make this repository public merely to bypass a private-repository Pages plan limitation.
+To change the backend later, update `API_BASE_URL` and rerun the Pages workflow. If the repository is made private again, the GitHub plan must support Pages for private repositories.
 
 ## Tests
 

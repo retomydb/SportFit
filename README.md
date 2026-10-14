@@ -1,10 +1,10 @@
 # SportFit Pro
 
-A responsive fitness website built from `docs/MASTER-PROMPT.docx`. Runs in a web browser, using Java 21, Spring Boot, Spring Security, Maven, persistent H2, HTML, CSS, vanilla JavaScript and locally bundled Chart.js.
+A responsive fitness website built from `docs/MASTER-PROMPT.docx`. Runs in a web browser, using Java 21, Spring Boot, Spring Security, Maven, encrypted GitHub account storage (with H2 fallback), HTML, CSS, vanilla JavaScript and locally bundled Chart.js.
 
 ## GitHub storage and deployment
 
-The GitHub-backed configuration stores encrypted account documents in the private `retomydb/SportFit` repository. The Pages workflow publishes the UI separately; a hosted Java API handles authentication and secure repository writes. See [deployment instructions](docs/GITHUB-DEPLOYMENT.md) for environment variables, migration, secret handling and the backend connection. The API hosting details are still required before the public UI can use accounts online.
+The GitHub-backed configuration stores encrypted account documents in the `retomydb/SportFit` repository. The Pages workflow publishes the UI separately; a hosted Java API handles authentication and secure repository writes. See [deployment instructions](docs/GITHUB-DEPLOYMENT.md) for environment variables, migration, secret handling and the backend connection. The API hosting details are still required before the public UI can use accounts online.
 
 ## Open the website
 
@@ -15,7 +15,7 @@ cd /Users/oladimejishodipe/SportApp
 ./start.sh
 ```
 
-The script detects Homebrew Java 21, builds the project, runs its backend tests, and launches the server. Maven 3.9.11 and the downloaded dependencies are available in `.tools/` on this machine. On a different machine, install Java 21 and Maven 3.9+, then run `./start.sh`. Set `PORT` to use a different port. Stop the foreground server with Ctrl+C.
+The script detects Homebrew Java 21, builds the project, runs its backend tests, and launches the GitHub-backed server using the private local encryption key and existing GitHub CLI credential. Use `SPORTFIT_STORAGE=h2 ./start.sh` only for the local H2 fallback. Maven 3.9.11 and the downloaded dependencies are available in `.tools/` on this machine. On a different machine, install Java 21 and Maven 3.9+, then run `./start.sh`. Set `PORT` to use a different port. Stop the foreground server with Ctrl+C.
 
 ## Website areas
 

@@ -46,4 +46,10 @@ class ApiTests {
   mvc.perform(put("/api/password").with(user("athlete@example.test")).with(csrf()).contentType("application/json").content("{\"currentPassword\":\"wrong\",\"newPassword\":\"NewPassword123!\"}")).andExpect(status().isBadRequest());
   mvc.perform(put("/api/password").with(user("athlete@example.test")).with(csrf()).contentType("application/json").content("{\"currentPassword\":\"Testing123!\",\"newPassword\":\"NewPassword123!\"}")).andExpect(status().isOk());
  }
+ @Test void crossOriginSessionHeaders()throws Exception{
+  mvc.perform(options("/api/state").header("Origin","http://localhost:8087").header("Access-Control-Request-Method","GET").header("Access-Control-Request-Headers","x-auth-token")).andExpect(status().isOk()).andExpect(header().string("Access-Control-Allow-Origin","http://localhost:8087"));
+  mvc.perform(options("/api/state").header("Origin","https://untrusted.example").header("Access-Control-Request-Method","GET")).andExpect(status().isForbidden());
+  mvc.perform(get("/api/csrf").header("Origin","http://localhost:8087")).andExpect(status().isOk()).andExpect(header().string("Access-Control-Expose-Headers","X-Auth-Token")).andExpect(header().exists("X-Auth-Token"));
+ }
+
 }
