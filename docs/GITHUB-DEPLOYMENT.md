@@ -74,3 +74,21 @@ docker compose stop
 ```
 
 Other Docker projects are independent. `scripts/check-public-api.mjs` optionally verifies real HTTPS registration, session authentication and GitHub persistence using a synthetic account, then removes that account's current encrypted file. Its synthetic revisions remain in Git history.
+
+## Password recovery
+
+The sign-in page includes **Forgot password?**. Reset requests receive the same confirmation whether or not an account exists. The backend sends mail asynchronously and limits requests per address (3 per 15 minutes) and client IP (10 per 15 minutes). Links expire after 30 minutes, can be used once, and replace any previous reset link for that account.
+
+The token payload is encrypted with a separate key derived from the existing data key, and only a SHA-256 token digest and expiry are stored in the encrypted account document. Reset tokens use a URL fragment, are removed from the address bar when opened, and the page uses a no-referrer policy. A separate non-secret random query value makes email links load the current page rather than a cached earlier version. A successful reset replaces the BCrypt password hash, clears the token, and invalidates every existing server session for that account. Changing the password while signed in also clears outstanding recovery links. Recovering users must sign in afterward.
+
+Email delivery uses Resend and a verified sender domain. Its secret key and sender are mounted as `sportfit.mail.api-key` and `sportfit.mail.from` in Docker. They stay in ignored `.runtime/` files, never in GitHub or the image. The current local installation reuses the owner's existing email provider configuration with SportFit Pro as the sender display name.
+
+To configure or replace the mail settings without revealing credentials:
+
+```sh
+node scripts/configure-email.mjs /path/to/your/private.env
+```
+
+The file may contain `SPORTFIT_RESEND_API_KEY` and `SPORTFIT_EMAIL_FROM`, or the existing `NEWSLETTER_RESEND_API_KEY` and `NEWSLETTER_FROM_EMAIL` names. Environment variables with the SportFit names are also supported. Recreate only the backend after changing the secret files. Set `SPORTFIT_FRONTEND_URL` if the public UI address changes; email links are built from this configured address, not a client-provided host header.
+
+Password reset unit/integration tests use captured mail rather than emailing real users. Live delivery checks use Resend's `delivered+label@resend.dev` simulator and a disposable synthetic account. Losing or changing the persistent data key invalidates outstanding reset links as well as access to encrypted account files. Local H2 mode without a data key uses a process-local reset key, so its links expire on process restart.

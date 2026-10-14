@@ -1,0 +1,20 @@
+// End-to-end recovery check using Resend's documented delivery simulator, not a real person's inbox.
+import fs from 'node:fs/promises';import crypto from 'node:crypto';import {execFileSync} from 'node:child_process';
+const base=(await fs.readFile(new URL('../.runtime/public-api-url',import.meta.url),'utf8')).trim();const mailKey=(await fs.readFile(new URL('../.runtime/resend-api-key',import.meta.url),'utf8')).trim();
+const email=`delivered+sportfit-reset-${Date.now()}@resend.dev`,oldPassword=crypto.randomBytes(24).toString('base64url'),newPassword=crypto.randomBytes(24).toString('base64url');let session='',csrf=null,created=false;
+async function call(path,method='GET',body,form=false){const headers={Origin:'https://retomydb.github.io'};if(session)headers['X-Auth-Token']=session;if(method!=='GET')headers[csrf.headerName]=csrf.token;if(body)headers['Content-Type']=form?'application/x-www-form-urlencoded':'application/json';const r=await fetch(base+'/api'+path,{method,headers,body:body?(form?new URLSearchParams(body):JSON.stringify(body)):undefined,signal:AbortSignal.timeout(45000)});if(r.headers.has('x-auth-token'))session=r.headers.get('x-auth-token');return r;}
+async function requireOk(path,method,body,form){const r=await call(path,method,body,form);if(!r.ok)throw Error(path+' HTTP '+r.status);return r.status===204?null:r.json();}
+async function mail(path){const r=await fetch('https://api.resend.com'+path,{headers:{Authorization:'Bearer '+mailKey},signal:AbortSignal.timeout(20000)});if(r.status===429)return null;if(!r.ok)throw Error('Test email lookup HTTP '+r.status);return r.json();}
+try{
+ csrf=await requireOk('/csrf');await requireOk('/register','POST',{name:'Password recovery verification',email,password:oldPassword});created=true;await requireOk('/login','POST',{username:email,password:oldPassword},true);csrf=await requireOk('/csrf');const previousSession=session;
+ await requireOk('/password-reset/request','POST',{email});let token='',event='';
+ for(let i=0;i<35&&!token;i++){await new Promise(r=>setTimeout(r,2000));const recent=await mail('/emails?limit=100');const record=recent?.data?.find(m=>(Array.isArray(m.to)?m.to:[m.to]).includes(email));if(record){const detail=await mail('/emails/'+record.id);token=detail?.text?.match(/#reset-password\?token=([A-Za-z0-9_-]+)/)?.[1]||'';event=detail?.last_event||record.last_event||'';}}
+ if(!token)throw Error('The test reset email did not arrive with a usable link.');
+ await requireOk('/password-reset/confirm','POST',{token,newPassword});
+ const prior=await fetch(base+'/api/state',{headers:{Origin:'https://retomydb.github.io','X-Auth-Token':previousSession}});if(prior.status!==401)throw Error('Prior-session check returned HTTP '+prior.status+' after reset (expected 401).');
+ session='';csrf=await requireOk('/csrf');let r=await call('/login','POST',{username:email,password:oldPassword},true);if(r.status!==401)throw Error('Old password still accepted.');
+ await requireOk('/login','POST',{username:email,password:newPassword},true);csrf=await requireOk('/csrf');const state=await requireOk('/state');if(state.email!==email)throw Error('New password login failed.');r=await call('/password-reset/confirm','POST',{token,newPassword:oldPassword});if(r.status!==400)throw Error('Reset link was reusable.');await requireOk('/logout','POST');
+ console.log('PASS: public reset request, real Resend test email with reset link, password replacement, old-session revocation, new-password login, and single-use enforcement. Delivery event:',event||'provider accepted');
+}finally{
+ if(created){const path='data/accounts/'+crypto.createHash('sha256').update(email).digest('hex')+'.json.enc';const route='repos/retomydb/SportFit/contents/'+path;const metadata=JSON.parse(execFileSync('gh',['api',route],{encoding:'utf8'}));execFileSync('gh',['api','--method','DELETE',route,'--input','-'],{input:JSON.stringify({message:'Remove synthetic password recovery verification account',sha:metadata.sha,branch:'main'}),stdio:['pipe','pipe','pipe']});console.log('Synthetic recovery account removed; existing accounts were unchanged.');}
+}

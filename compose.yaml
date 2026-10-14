@@ -12,12 +12,17 @@ services:
       SPORTFIT_GITHUB_REPOSITORY: retomydb/SportFit
       SPORTFIT_GITHUB_BRANCH: main
       SPORTFIT_ALLOWED_ORIGINS: https://retomydb.github.io,http://localhost:8087,http://127.0.0.1:8087
+      SPORTFIT_FRONTEND_URL: https://retomydb.github.io/SportFit/
       PORT: "8087"
     secrets:
       - source: github_token
         target: sportfit.github.token
       - source: data_key
         target: sportfit.github.encryption-key
+      - source: resend_key
+        target: sportfit.mail.api-key
+      - source: email_from
+        target: sportfit.mail.from
     read_only: true
     tmpfs:
       - /tmp
@@ -40,3 +45,7 @@ secrets:
     file: .runtime/github-token
   data_key:
     file: .runtime/data-key
+  resend_key:
+    file: .runtime/resend-api-key
+  email_from:
+    file: .runtime/email-from

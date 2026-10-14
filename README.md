@@ -20,7 +20,7 @@ The script detects Homebrew Java 21, builds the project, runs its backend tests,
 ## Website areas
 
 - **Overview:** actual activity totals, daily/weekly/monthly minutes chart, weekly goal, active-day markers, and upcoming planned sessions.
-- **My profile:** registration, secure sign-in/out, profile editing, fitness level, goals, preferred activities, BMI calculation, and password changes. Passwords use BCrypt. Sessions use opaque header identifiers. State-changing requests use Spring Security CSRF tokens. Accounts have separate records.
+- **My profile:** registration, secure sign-in/out, profile editing, fitness level, goals, preferred activities, BMI calculation, password changes, and email-based forgotten-password recovery. Passwords use BCrypt. Sessions use opaque header identifiers. State-changing requests use Spring Security CSRF tokens. Accounts have separate records.
 - **Explore activities:** ten sports with generated photos, descriptions, equipment, intensity, difficulty, suggested duration and estimated calories. Filter by type, intensity, duration and name; save favourites or open an activity in the tracker.
 - **Workout tracker:** start, pause, resume, finish and save; timer, target progress, repetition and set counters, a 60-second rest timer, estimated calories, and optional permission-based GPS distance for running/walking/cycling. Unfinished workouts are restored paused after refresh. Only total GPS distance is saved, not coordinates.
 - **My progress:** stored workout history, minutes trend, session frequency, calorie estimates, sport distribution, weekly goal, current streak and previous-week comparison. Select daily, weekly or monthly periods; download a CSV activity report.
@@ -81,7 +81,7 @@ java -jar target/sportfit-pro-1.0.0.jar --server.port=8088 \
 node scripts/check-ui.cjs
 ```
 
-Backend integration tests cover authentication, password hashing, CSRF, validation, calorie computation, data storage, per-account ownership, plan updates/deletion, wellness upserts and password changes. The DOM integration suite covers account creation/sign-in, profile/BMI, saving/filtering sports, workout start/pause/resume/save, reps and sets, charts' data setup, CSV export, planner CRUD/completion/generation, hydration, recovery guidance, badges and sign-out. The DOM suite stubs canvas rendering and native dialog methods; it does not replace a browser layout or GPS-device test. Chrome automation was unavailable during this session, so desktop/mobile visual inspection and real-device GPS accuracy remain unverified.
+Backend integration tests cover authentication, password hashing, CSRF, validation, calorie computation, data storage, per-account ownership, plan updates/deletion, wellness upserts password changes, and email-based forgotten-password recovery. The DOM integration suite covers account creation/sign-in, profile/BMI, saving/filtering sports, workout start/pause/resume/save, reps and sets, charts' data setup, CSV export, planner CRUD/completion/generation, hydration, recovery guidance, badges and sign-out. The DOM suite stubs canvas rendering and native dialog methods; it does not replace a browser layout or GPS-device test. Chrome automation was unavailable during this session, so desktop/mobile visual inspection and real-device GPS accuracy remain unverified.
 
 ## MySQL option
 
