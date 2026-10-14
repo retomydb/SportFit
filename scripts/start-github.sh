@@ -10,4 +10,4 @@ if [ -z "${SPORTFIT_DATA_KEY:-}" ]; then
 fi
 export SPRING_PROFILES_ACTIVE=github
 export SPORTFIT_ALLOWED_ORIGINS="${SPORTFIT_ALLOWED_ORIGINS:-https://retomydb.github.io,http://localhost:8087,http://127.0.0.1:8087}"
-exec java -jar target/sportfit-pro-1.0.0.jar "$@"
+exec java -jar target/sportfit-pro-1.0.0.jar --debug=false "$@"

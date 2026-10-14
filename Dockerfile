@@ -8,4 +8,4 @@ WORKDIR /app
 COPY --from=build /build/target/sportfit-pro-1.0.0.jar app.jar
 ENV SPRING_PROFILES_ACTIVE=github
 EXPOSE 8087
-ENTRYPOINT ["java","-jar","app.jar"]
+ENTRYPOINT ["java","-jar","app.jar","--debug=false"]
