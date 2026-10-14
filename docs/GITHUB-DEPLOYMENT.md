@@ -42,7 +42,7 @@ It copies each existing account into encrypted GitHub storage and preserves any 
 
 Enable GitHub Pages with **GitHub Actions** as source. Set the repository variable `API_BASE_URL` to the backend HTTPS origin, without a trailing slash. Run **Publish SportFit website**. The intended URL is `https://retomydb.github.io/SportFit/`.
 
-The build uses relative asset paths for the `/SportFit/` project path. The account directory, Java source, local database, and secrets are never included in the published artifact. Changes beneath `data/` do not run the Pages workflow. Until `API_BASE_URL` is set, the deployed UI clearly reports that the account server still needs connecting and does not attempt GitHub token access from the browser.
+The build uses relative asset paths for the `/SportFit/` project path, embeds the current public API setting directly in the HTML, and uses content-versioned JS/CSS filenames so a cached empty config.js cannot disable login. The account directory, Java source, local database, and secrets are never included in the published artifact. Changes beneath `data/` do not run the Pages workflow. Until `API_BASE_URL` is set, the deployed UI clearly reports that the account server still needs connecting and does not attempt GitHub token access from the browser.
 
 To change the backend later, update `API_BASE_URL` and rerun the Pages workflow. If the repository is made private again, the GitHub plan must support Pages for private repositories.
 
